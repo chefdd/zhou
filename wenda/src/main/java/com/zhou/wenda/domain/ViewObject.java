@@ -1,4 +1,4 @@
-package com.zhou.wenda.wenda.domain;
+package com.zhou.wenda.domain;
 
 import java.util.HashMap;
 import java.util.Map;

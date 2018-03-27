@@ -1,6 +1,6 @@
-package com.zhou.wenda.wenda.Controller;
+package com.zhou.wenda.Controller;
 
-import com.zhou.wenda.wenda.domain.User;
+import com.zhou.wenda.domain.User;
 import org.springframework.stereotype.Component;
 
 @Component

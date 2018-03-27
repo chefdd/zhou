@@ -1,4 +1,4 @@
-package com.zhou.wenda.wenda;
+package com.zhou.wenda;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.zhou.wenda.wenda.domain;
+package com.zhou.wenda.domain;
 
 public class EntityType {
     public static int ENTITY_QUESTION = 1;

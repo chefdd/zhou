@@ -1,4 +1,6 @@
-package com.zhou.wenda.wenda.Dao;
+package com.zhou.wenda.Dao;
 
 public interface QuestionDao {
+
+
 }

@@ -1,4 +1,4 @@
-package com.zhou.wenda.wenda.Controller;
+package com.zhou.wenda.Controller;
 
 
 import org.springframework.stereotype.Controller;
