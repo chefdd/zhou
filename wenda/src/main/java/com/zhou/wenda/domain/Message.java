@@ -7,6 +7,8 @@ import java.util.Date;
 @Data
 public class Message {
 
+
+    //私信
     private int id;
     private int fromId;
     private int toId;

@@ -8,6 +8,9 @@ import java.util.Date;
 @Data
 public class Comment {
 
+
+    //pinglun
+
     private int id;
     private String content;
     private int userId;
