@@ -18,7 +18,7 @@ public class MessageService {
     @Autowired
     private SensitiveService sensitiveService;
 
-    public int add(Message message) {
+    public int addMessage(Message message) {
         message.setContent(HtmlUtils.htmlEscape(message.getContent()));
         message.setContent(sensitiveService.filter(message.getContent()));
         return messageDao.insertMessage(message) == true ? message.getId() : 0;

@@ -14,7 +14,7 @@ public interface QuestionDao {
      * @param question
      * @return
      */
-    @Insert(value = "insert into question(title, content, userId, created_date,commentCount) values (#{title}, #{content}, #{userId}, #{createdDate}, #{commentCount})")
+    @Insert(value = "insert into question(title, content, user_id, created_date,comment_count) values (#{title}, #{content}, #{userId}, #{createdDate}, #{commentCount})")
     boolean insertQuestion(Question question);
 
     /**
@@ -32,10 +32,10 @@ public interface QuestionDao {
    /**
      * find
      */
-    @Select("select * from user where id = #{id}")
+    @Select("select * from question where id = #{id}")
     Question findById(int id);
 
 
-    @Select("select * from question where id = #{userId} order by created_date desc limit #{offset}, #{limit}")
+    @Select("select * from question order by created_date desc limit #{offset}, #{limit}")
     List<Question> selectLatestQuestions(@Param("userId") int userId,@Param("offset") int offset, @Param("limit") int limit);
 }

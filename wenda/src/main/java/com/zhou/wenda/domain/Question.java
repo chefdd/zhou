@@ -26,6 +26,12 @@ public class Question {
         this.createdDate = createdDate;
         this.commentCount = commentCount;
     }
+    public Question(String title, String content,Date createdDate, int commentCount) {
+        this.title = title;
+        this.content = content;
+        this.createdDate = createdDate;
+        this.commentCount = commentCount;
+    }
 
     @Override
     public String toString() {

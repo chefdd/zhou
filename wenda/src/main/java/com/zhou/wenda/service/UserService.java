@@ -27,7 +27,7 @@ public class UserService {
     @Autowired
     TicketService ticketService;
 
-    public Map<String, String> regiter(String username, String password){
+    public Map<String, String> register(String username, String password){
         Map<String, String> map = new HashMap<>();
 
         if (StringUtils.isEmpty(username)) {
@@ -58,6 +58,12 @@ public class UserService {
         user.setPassword(WendaUtil.MD5(password + user.getSalt()));
 
         user.setHeadUrl(String.format("http://p61aboe8i.bkt.clouddn.com/%d.jpg", new Random().nextInt(23)));
+        userDao.insertUser(user);
+        /**
+         * 注册成功，下发t票
+         */
+        String ticket = ticketService.addTicket(user.getId());
+        map.put("ticket", ticket);
         return map;
 
 
@@ -85,7 +91,9 @@ public class UserService {
         }
 
 
-        if (WendaUtil.MD5(password + user.getSalt()).equals(user.getPassword())) {
+       // System.out.println("zhoumima" + WendaUtil.MD5(password + user.getSalt()));
+
+        if (!WendaUtil.MD5(password + user.getSalt()).equals(user.getPassword())) {
             map.put("msg", "密码错误");
             return map;
         }

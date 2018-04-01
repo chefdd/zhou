@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css}" />
+    <script th:src="@{https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js}"></script>
+    <script th:src="@{https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container-fulid">
+    <div class="row">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h2>与世界分享你的知识、经验和见解</h2>
+            <br/>
+        </div>
+        <!--<div class="col-md-4 col-md-offset-4" th:if="${msg != 'null'}">
+            <h4 th:text="${msg}"></h4>
+            <br/>
+        </div>-->
+    </div>
+
+    <form class="form-horizontal"  method="post" id="regloginform">
+        <div class="form-group">
+            <label class="col-md-1 col-md-offset-4 control-label" for="username">用户名：</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="username" name="username" placeholder="用户名" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-1 col-md-offset-4 control-label" for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+            <div class="col-md-2">
+                <input type="password" class="form-control" id="password" name="password" placeholder="密码" />
+            </div>
+        </div>
+
+        <!--<div class="col-md-1 col-md-offset-4" th:if="${msg != 'null'}">
+            <h4 th:text="${msg}"></h4>
+            <br/>
+        </div>-->
+
+        <div class="form-group">
+            <div class="col-md-1 col-md-offset-5">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="remember" name="remember" value="true" th:checked="true"/>记住我
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <p class="form-control-static"><a href="#">无法登录？</a> </p>
+            </div>
+        </div>
+
+        <input type="hidden" name="next" th:value="${next}"/>
+
+        <div class="form-group">
+            <div class="col-md-3 col-md-offset-5">
+                <button type="submit" class="btn btn-primary" onclick="form=document.getElementById('regloginform'); form.action='/login/'">登录</button>
+                <button type="submit" class="btn btn-primary" onclick="form=document.getElementById('regloginform'); form.action='/reg/'">注册</button>
+            </div>
+            <div class="col-md-3 col-md-offset-5" th:if="${msg != 'null'}">
+                <h4 th:text="${msg}"></h4>
+                <br/>
+            </div>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

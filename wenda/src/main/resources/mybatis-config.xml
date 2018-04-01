@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--设置-->
+    <settings>
+        <!--该设置影响所有映射器中配置的缓存全局开关-->
+        <setting name="cacheEnabled" value="true"/>
+        <!--设置超时时间-->
+        <setting name="defaultStatementTimeout" value="3000"/>
+        <!--开启自动驼峰命名规则-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--允许JDBC支持自动生成主键-->
+        <setting name="useGeneratedKeys" value="true"/>
+        <!--指定Mybatis应如何自动映射列到字段或属性-->
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+    </settings>
+</configuration>

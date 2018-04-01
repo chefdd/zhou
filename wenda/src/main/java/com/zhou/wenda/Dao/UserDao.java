@@ -13,7 +13,7 @@ public interface UserDao {
      * @param user
      * @return
      */
-    @Insert("insert into user(name, password, salt, head_url) values (#{name}, #{password}, #{salt}, #{head_url})")
+    @Insert("insert into user(name, password, salt, head_url) values (#{name}, #{password}, #{salt}, #{headUrl})")
     boolean insertUser(User user);
 
 

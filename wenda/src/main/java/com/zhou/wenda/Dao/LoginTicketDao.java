@@ -11,11 +11,11 @@ public interface LoginTicketDao {
      * add
      * @return
      */
-    @Insert("insert into login_ticket(user_id, ticket, expired, status) values (#{useId}, #{ticked}, #{expired}, #{status})")
+    @Insert("insert into login_ticket(user_id, ticket, expired, status) values (#{userId}, #{ticket}, #{expired}, #{status})")
     boolean insertTicker(LoginTicket loginTicket);
 
 
-    @Update("update longin_ticket set status = #{status} where ticket = #{ticket}")
+    @Update("update login_ticket set status = #{status} where ticket = #{ticket}")
     void updateStatus(@Param("ticket") String ticket, @Param("status") int status);
 
     @Select("select * from login_ticket where ticket = #{ticket}")
