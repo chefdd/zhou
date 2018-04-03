@@ -2,11 +2,9 @@ package com.zhou.wenda.Controller;
 
 
 import com.fasterxml.jackson.databind.ser.VirtualBeanPropertyWriter;
-import com.zhou.wenda.domain.Comment;
-import com.zhou.wenda.domain.Question;
-import com.zhou.wenda.domain.User;
-import com.zhou.wenda.domain.ViewObject;
+import com.zhou.wenda.domain.*;
 import com.zhou.wenda.service.CommentService;
+import com.zhou.wenda.service.FollowService;
 import com.zhou.wenda.service.QuestionService;
 import com.zhou.wenda.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -34,6 +32,8 @@ public class HomeController {
     @Resource
     private CommentService commentService;
 
+    @Resource
+    private FollowService followService;
 
     /**
      * 首页， 展示问题，
@@ -62,7 +62,7 @@ public class HomeController {
         vo.set("followerCount", 0);
         vo.set("followeeCount", 0);
         if (hostHolder.getUser() != null){
-            vo.set("followed", false);
+            vo.set("followed", followService.isFollower(hostHolder.getUser().getId(), EntityType.ENTITY_USER, userId));
         }else {
             vo.set("followed", false);
         }
