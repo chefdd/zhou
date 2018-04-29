@@ -5,10 +5,7 @@ import com.zhou.wenda.domain.Comment;
 import com.zhou.wenda.domain.EntityType;
 import com.zhou.wenda.domain.Question;
 import com.zhou.wenda.domain.ViewObject;
-import com.zhou.wenda.service.CommentService;
-import com.zhou.wenda.service.LikeService;
-import com.zhou.wenda.service.QuestionService;
-import com.zhou.wenda.service.UserService;
+import com.zhou.wenda.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +37,9 @@ public class QuestionCon {
 
     @Resource
     private LikeService likeService;
+
+    @Resource
+    private FollowService followService;
 
     /**
      * add question
@@ -79,7 +79,7 @@ public class QuestionCon {
     @RequestMapping(value = "/question/{qid}", method = RequestMethod.GET)
     public String DetailQuestion(Model model,
                                  @PathVariable("qid") int questionId) {
-        Question question = questionService.selectByid(questionId);
+        Question question = questionService.selectById(questionId);
 
         //System.out.println("question : =====" + question);
         List<Comment> commentList = commentService.selectCommentByEntity(questionId, EntityType.ENTITY_QUESTION);
@@ -95,19 +95,20 @@ public class QuestionCon {
                 vo.set("liked", 0);
 
             }
-            vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getEntityId()));
+            vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
             vo.set("user", userService.getUserById(comment.getUserId()));
 
             commentview.add(vo);
         }
-        if (hostHolder != null) {
-            model.addAttribute("followed", false);
-        }
-        {
+        if (hostHolder.getUser() != null) {
+            model.addAttribute("followed", followService.isFollower(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, questionId));
+        } else{
             model.addAttribute("followed", false);
 
         }
         model.addAttribute("question", question);
+        model.addAttribute("questionUser", userService.getUserById(question.getUserId()));
+
         model.addAttribute("comments", commentview);
         model.addAttribute("user", userService.getUserById(question.getUserId()));
         //System.out.println(userService.getUserById(question))
@@ -115,4 +116,7 @@ public class QuestionCon {
     }
 
 
+
 }
+
+

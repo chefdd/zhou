@@ -43,7 +43,7 @@ public class QuestionService {
     }
 
 
-    public Question selectByid(int id) {
+    public Question selectById(int id) {
         return questionDao.findById(id);
     }
 

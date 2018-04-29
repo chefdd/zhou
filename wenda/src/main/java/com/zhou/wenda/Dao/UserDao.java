@@ -41,4 +41,14 @@ public interface UserDao {
 
     @Select("select * from user where name = #{name}")
     User findByName(String name);
+
+    //修改用户密码
+    @Update("update user set password = @{password} where id = @{userId}")
+    boolean updatePwd(@Param("userId") int userId,@Param("password") String password);
+
+    //修改用户头像图片
+    @Update("update user set head_url = @{headUrl} where id = @{userId}")
+    boolean updateHeadUrl(@Param("userId") int userId,@Param("headUrl") String headUrl);
+
+
 }

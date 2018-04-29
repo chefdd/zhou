@@ -1,6 +1,9 @@
 package com.zhou.wenda.Controller;
 
 
+import com.zhou.wenda.asynchronous.EventModel;
+import com.zhou.wenda.asynchronous.EventProducer;
+import com.zhou.wenda.asynchronous.EventType;
 import com.zhou.wenda.domain.Comment;
 import com.zhou.wenda.domain.EntityType;
 import com.zhou.wenda.service.CommentService;
@@ -28,6 +31,9 @@ public class CommentContro {
     @Resource
     private QuestionService questionService;
 
+    @Resource
+    private EventProducer eventProducer;
+
 
     @RequestMapping(value = "/addComment", method = RequestMethod.POST)
     public String addComment(@RequestParam("questionId") Integer questionid,
@@ -45,6 +51,16 @@ public class CommentContro {
             comment.setCreatedDate(new Date());
             comment.setEntityType(EntityType.ENTITY_QUESTION);
             commentService.insertComment(comment);
+
+            /**
+             * 异步：评论问题后，发送私信
+             */
+            eventProducer.fireEvent(new EventModel(EventType.COMMENT)
+                    .setActorId(hostHolder.getUser().getId())
+                    .setEntityId(questionid)
+                    .setEntityType(EntityType.ENTITY_QUESTION)
+                    .setEntityOwnerId(questionService.selectById(questionid).getUserId()));
+
 
             int commentCount = commentService.getCommentCount(comment.getEntityId(), comment.getEntityType());
             log.info("comment entityId "+comment.getEntityId() + comment.getId());

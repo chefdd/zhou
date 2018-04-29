@@ -23,22 +23,22 @@ public class FollowService {
      * A关注B：
      *      * 1、A的关注列表中加入B
      *      * 2、B的粉丝列表中加入A
-     * @param userId
-     * @param entityId
+     * @param entityIdA
+     * @param entityIdB
      * @param entityType
      * @return
      */
-    public boolean follow(int userId, int entityId, int entityType) {
-        String followerKey = RedisKey.getFollowerKey(entityType, entityId);
-        String followeeKey = RedisKey.getFolloweeKey(userId, entityType);
+    public boolean follow(int entityIdA, int entityIdB, int entityType) {
+        String followerKey = RedisKey.getFollowerKey(entityType, entityIdB);
+        String followeeKey = RedisKey.getFolloweeKey(entityIdA, entityType);
 
         Date date = new Date();
         Jedis jedis = redJedis.getJedis();
         Transaction tran = redJedis.multi(jedis);
         // 在实体的粉丝中增加当前用户
-        tran.zadd(followerKey, date.getTime(), String.valueOf(userId));
+        tran.zadd(followerKey, date.getTime(), String.valueOf(entityIdA));
         // 在当前用户的关注对象中增加该实体
-        tran.zadd(followeeKey, date.getTime(), String.valueOf(entityId));
+        tran.zadd(followeeKey, date.getTime(), String.valueOf(entityIdB));
 
         List<Object> ret = redJedis.exec(tran, jedis);
         return ret.size() == 2 && (Long)ret.get(0) > 0;
@@ -48,12 +48,12 @@ public class FollowService {
     /**
      * 取消关注
      * @param userId
-     * @param entityId
+     * @param entityIdB
      * @param entityType
      * @return
      */
-    public boolean unfollow(int userId, int entityId, int entityType) {
-        String followerKey = RedisKey.getFollowerKey(entityType, entityId);
+    public boolean unfollow(int userId, int entityIdB, int entityType) {
+        String followerKey = RedisKey.getFollowerKey(entityType, entityIdB);
         String followeeKey = RedisKey.getFolloweeKey(userId, entityType);
 
         Jedis jedis = redJedis.getJedis();
@@ -62,7 +62,7 @@ public class FollowService {
         tran.zrem(followerKey, String.valueOf(userId));
 
         // 在当前用户的关注对象中删除该实体
-        tran.zrem(followeeKey, String.valueOf(entityId));
+        tran.zrem(followeeKey, String.valueOf(entityIdB));
         List<Object> ret = redJedis.exec(tran, jedis);
         return ret.size() == 2 && (Long)ret.get(0) > 0;
     }

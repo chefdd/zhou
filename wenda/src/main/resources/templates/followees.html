@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>关注对象列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css}" />
+    <script th:src="@{https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js}"></script>
+    <script th:src="@{https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+
+<div class="container-fulid">
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <!--标志-->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <!--搜索框-->
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="搜索你感兴趣的内容"/>
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+
+                <!--文本-->
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="#">首页 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li><a href="#">发现</a> </li>
+                </ul>
+
+                <!--按钮-->
+                <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myMessage">
+                    发私信
+                </button>
+                <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">
+                    提问
+                </button>
+
+                <ul class="nav navbar-nav navbar-right" th:if="${user == null}">
+                    <li>
+                        <a th:href="@{/reglogin}">注册/登陆</a>
+                    </li>
+                </ul>
+
+                <!--下拉框-->
+                <ul class="nav navbar-nav navbar-right" th:if="${user != null}">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span th:text="${user.name}"></span>
+                            <img th:src="${user.headUrl}"/>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a >我的主页</a></li>
+                            <li><a th:href="@{/msg/list}">私信</a></li>
+                            <li><a th:href="@{/logout/}">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 发起问题模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="form">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">问题发布</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="questionform" th:action="@{/question/add}">
+                        <div class="form-group">
+                            <label for="title">标题</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">内容</label>
+                            <textarea class="form-control" rows="5" id="content" name="content" placeholder="请输入内容"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">发布</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--发消息模态框-->
+    <div class="modal fade" id="myMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="form">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">发送私信</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="questionform" th:action="@{/msg/addMessage}">
+                        <div class="form-group">
+                            <label for="title">发给：</label>
+                            <input type="text" class="form-control" id="toName" name="toName" placeholder="请输入发送对象"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">内容：</label>
+                            <textarea class="form-control" rows="5" id="content" name="content" placeholder="请输入内容"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">发布</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-2">
+            用户<span th:text="${curUser.name}"></span>关注了<span th:text="${followeeCount}"></span>个人
+        </div>
+    </div>
+    <div class="row">
+        <hr/>
+    </div>
+
+
+    <div th:each="followee : ${followees}">
+        <div class="row">
+            <div class="col-md-1 col-md-offset-2">
+                <img th:src="${followee.get('user').headUrl}"/>
+            </div>
+            <div class="col-md-9">
+                <p th:text="${followee.get('user').name}"></p>
+                <span th:text="${followee.get('followerCount')}"></span>粉丝
+                <span th:text="${followee.get('followeeCount')}"></span>关注
+            </div>
+        </div>
+        <div class="row">
+            <hr/>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

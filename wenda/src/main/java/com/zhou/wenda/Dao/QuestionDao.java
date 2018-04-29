@@ -27,7 +27,7 @@ public interface QuestionDao {
      * 修改
      */
     @Update(value = "update question set comment_count = #{count} where id = #{id}")
-    boolean updateCommentCount(@Param("id") int id, int count);
+    boolean updateCommentCount(@Param("id") int id, @Param("count")int count);
 
    /**
      * find
