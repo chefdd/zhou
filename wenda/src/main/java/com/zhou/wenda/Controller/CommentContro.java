@@ -61,10 +61,12 @@ public class CommentContro {
                     .setEntityType(EntityType.ENTITY_QUESTION)
                     .setEntityOwnerId(questionService.selectById(questionid).getUserId()));
 
+            log.info("comment entityId "+comment.getEntityId() + comment.getId());
 
             int commentCount = commentService.getCommentCount(comment.getEntityId(), comment.getEntityType());
-            log.info("comment entityId "+comment.getEntityId() + comment.getId());
-            questionService.updateCommentCount(comment.getId(), commentCount);
+
+            log.info("commentCount :{}", commentCount);
+            questionService.updateCommentCount(comment.getEntityId(), commentCount);
 
         } catch (Exception e) {
             log.error("添加评论失败" + e.getMessage());

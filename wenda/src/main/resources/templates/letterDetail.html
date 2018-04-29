@@ -140,10 +140,10 @@
                 <img th:src="${message.get('user').headUrl}" height = "100%" width ="100%"/>
             </div>
             <div class="col-md-6">
-                <p th:text="${message.get('message').content}"></p>
+                <p th:utext="${message.get('message').content}"></p>
             </div>
             <div class="col-md-2">
-                <p th:text="${#dates.format(message.get('message').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></p>
+                <p th:utext="${#dates.format(message.get('message').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></p>
             </div>
         </div>
         <div class="row">

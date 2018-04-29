@@ -7,6 +7,7 @@ import com.zhou.wenda.service.FollowService;
 import com.zhou.wenda.service.QuestionService;
 import com.zhou.wenda.service.SearchService;
 import com.zhou.wenda.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +17,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class SearchController {
-    private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
-    @Autowired
+    @Resource
     private HostHolder hostHolder;
 
-    @Autowired
+    @Resource
     private SearchService searchService;
 
-    @Autowired
+    @Resource
     private FollowService followService;
 
-    @Autowired
+    @Resource
     private UserService userService;
 
-    @Autowired
+    @Resource
     private QuestionService questionService;
 
     @RequestMapping(value = {"/search"}, method = {RequestMethod.POST, RequestMethod.GET})
@@ -46,7 +48,7 @@ public class SearchController {
         try {
             List<Question> questionList = searchService.searchQuestion(keyword, offset, count,
                     "<font color = 'red'>", "</font>");
-            logger.info("问题搜索出来的大小为： {}", questionList.size());
+            log.info("问题搜索出来的大小为： {}", questionList.size());
 
             List<ViewObject> vos = new ArrayList<>();
             for (Question question : questionList) {
@@ -54,11 +56,11 @@ public class SearchController {
                 ViewObject vo = new ViewObject();
                 if (question.getContent() != null) {
                     q.setContent(question.getContent());
-                    logger.info("搜索问题内筒为：{}", question.getContent());
+                    log.info("搜索问题内筒为：{}", question.getContent());
                 }
                 if (question.getTitle() != null) {
                     q.setTitle(question.getTitle());
-                    logger.info("搜索问题标题为：{}", question.getTitle());
+                    log.info("搜索问题标题为：{}", question.getTitle());
 
                 }
                 vo.set("question", q);
@@ -70,7 +72,7 @@ public class SearchController {
             model.addAttribute("keyword", keyword);
 
         }catch (Exception e){
-            logger.error("搜索问题失败：" + e.getMessage());
+            log.error("搜索问题失败：" + e.getMessage());
         }
         return "result";
     }

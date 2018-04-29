@@ -58,7 +58,7 @@
                 <ul class="nav navbar-nav navbar-right" th:if="${user != null}">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span th:text="${user.name}"></span>
+                            <span th:utext="${user.name}"></span>
                             <img th:src="${user.headUrl}" height="50" width="50"/>
                             <span class="caret"></span>
                         </a>
@@ -138,8 +138,8 @@
         <!--具体的问题信息-->
         <div class="row">
             <div class="col-md-6 col-md-offset-2">
-                <h3 th:text="${question.title}"></h3>
-                <p th:text="${question.content}"></p>
+                <h3 th:utext="${question.title}"></h3>
+                <p th:utext="${question.content}"></p>
             </div>
             <div class="col-md-1">
                 <br/>
@@ -171,10 +171,10 @@
                     <img th:src="${comment.get('user').headUrl}" height="100%" width="100%"/>
                 </div>
                 <div class="col-md-8">
-                    <p th:text="${comment.get('user').name}"></p>
-                    <span th:text="${comment.get('likeCount')}"></span>人赞同<br/>
-                    <p th:text="${comment.get('comment').content}"></p>
-                    评论于<span th:text="${#dates.format(comment.get('comment').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></span>
+                    <p th:utext="${comment.get('user').name}"></p>
+                    <span th:utext="${comment.get('likeCount')}"></span>人赞同<br/>
+                    <p th:utext="${comment.get('comment').content}"></p>
+                    评论于<span th:utext="${#dates.format(comment.get('comment').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></span>
                 </div>
             </div>
             <div class="row">

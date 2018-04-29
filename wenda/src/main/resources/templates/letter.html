@@ -140,13 +140,13 @@
                 <img th:src="${conversation.get('user').headUrl}" height="100%" width="100%"/>
             </div>
             <div class="col-md-6">
-                <p th:text="${conversation.get('user').name}"></p>
-                <p th:text="${conversation.get('message').content}"></p>
+                <p th:utext="${conversation.get('user').name}"></p>
+                <p th:utext="${conversation.get('message').content}"></p>
             </div>
             <div class="col-md-2">
-                <p th:text="${#dates.format(conversation.get('message').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></p>
+                <p th:utext="${#dates.format(conversation.get('message').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></p>
                 <a th:href="@{/msg/detail(conversationId=${conversation.get('message').conversationId})}">
-                    共有<span th:text="${conversation.get('message').id}"></span>条会话
+                    共有<span th:utext="${conversation.get('message').id}"></span>条会话
                 </a>
             </div>
         </div>

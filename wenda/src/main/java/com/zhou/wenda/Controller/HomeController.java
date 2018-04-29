@@ -42,7 +42,7 @@ public class HomeController {
      */
     @RequestMapping(value = {"/", "/index"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String index(Model model) {
-        model.addAttribute("vos", getQuestions(0, 0, 10));
+        model.addAttribute("vos", getQuestions(0, 0, 100));
         return "index";
     }
 
@@ -78,6 +78,7 @@ public class HomeController {
         for (Question question : questionList) {
             ViewObject vo = new ViewObject();
             vo.set("question", question);
+            vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, question.getId()));
             vo.set("user", userService.getUserById(question.getUserId()));
             vos.add(vo);
         }

@@ -154,11 +154,11 @@
             <div class="col-md-9">
                 <!--<a th:href="@{/question(qid=${vo.get('question').id})}"><p th:text="${vo.get('question').title}"></p></a> -->
                 <a th:href="@{'/question/'+${vo.get('question').id}}"><p th:text="${vo.get('question').title}"></p></a>
-                <p th:text="${vo.get('user').name}"></p>
-                <p th:text="${#dates.format(vo.get('question').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></p>
-                <p th:text="${vo.get('question').content}"></p>
-                <span th:text="${vo.get('followCount')}"></span>条关注
-                <span th:text="${vo.get('question').commentCount}"></span>条评论
+                <p th:utext="${vo.get('user').name}"></p>
+                <p th:utext="${#dates.format(vo.get('question').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></p>
+                <p th:utext="${vo.get('question').content}"></p>
+                <span th:utext="${vo.get('followCount')}"></span>条关注
+                <span th:utext="${vo.get('question').commentCount}"></span>条评论
             </div>
         </div>
         <div class="row">
