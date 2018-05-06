@@ -28,4 +28,28 @@ public class Feed {
         this.createdDate = createdDate;
         this.data = data;
     }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+        this.dataJSON = JSONObject.parseObject(data);
+    }
+
+    public String get(String key){
+        return dataJSON == null ? null:dataJSON.getString(key);
+    }
+
+    @Override
+    public String toString() {
+        return "Feed{" +
+                "id=" + id +
+                ", type=" + type +
+                ", userId=" + userId +
+                ", createdDate=" + createdDate +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }

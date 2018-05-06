@@ -53,6 +53,7 @@ public class FeedController {
         }
         //获取所有关注的人的新鲜事
         List<Feed> feeds = feedService.getUserFeeds(Integer.MAX_VALUE, followees, 10);
+        log.info("f新鲜事大小:{}", feeds.size());
 
         model.addAttribute("feeds", feeds);
         return "feeds";
@@ -69,7 +70,7 @@ public class FeedController {
         int localUserId = hostHolder.getUser() == null ? 0:hostHolder.getUser().getId();
 
         List<String> feedIds = jedisAdapter.lrange(RedisKey.getTimelineKey(localUserId), 0, 10);
-
+        log.info("新鲜事id:{}", feedIds);
         List<Feed> feeds = new ArrayList<>();
 
         for (String feedId : feedIds){
@@ -79,6 +80,7 @@ public class FeedController {
             }
             feeds.add(feed);
         }
+        log.info("新鲜事大小:{}", feeds.size());
 
         model.addAttribute("feeds", feeds);
         return "feeds";

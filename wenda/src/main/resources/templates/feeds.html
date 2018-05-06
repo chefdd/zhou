@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>首页</title>
+    <title>最新动态</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+
     <link rel="stylesheet" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css}" />
     <script th:src="@{https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js}"></script>
@@ -25,21 +25,20 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <!--搜索框-->
-                <form class="navbar-form navbar-left" role="search" method="post" th:action="@{/search}">
+                <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="keyword" placeholder="搜索你感兴趣的内容"/>
+                        <input type="text" class="form-control" placeholder="搜索你感兴趣的内容"/>
                     </div>
                     <button type="submit" class="btn btn-default">搜索</button>
                 </form>
-                <!--标记-->
+
                 <!--文本-->
                 <ul class="nav navbar-nav">
                     <!--<li class="active">-->
                     <a class="btn btn-primary navbar-btn " role="button" href="/">首页 </a>
                     <!--</li>-->
                     <!--<a href="/" class="btn btn-primary navbar-btn" role="button" th:href="@{'/pullfeeds'}">发现</a>-->
-                    <a  class="btn btn-primary navbar-btn" role="button" th:href="@{/pullfeeds}">发现</a>
-
+                    <a class="btn btn-primary navbar-btn" role="button" th:href="@{/pullfeeds}">发现</a>
                 </ul>
 
                 <!--按钮-->
@@ -61,21 +60,13 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span th:text="${user.name}"></span>
-                            <img th:src="${user.headUrl}" height="50" width="50" class="img-circle"/>
+                            <img th:src="${user.headUrl}" height = "50" width = "50" class="img-circle"/>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a >我的主页</a></li>
-                            <!--<li><a th:href="@{/msg/list}">私信</a></li>-->
-                            <!--<li><a th:href="@{/logout/}">退出</a></li>-->
-                            <!--标记-->
-                            <li role="presentation">
-                                <a role="menuitem" tabindex="-1" th:href="@{/msg/list}">私信</a>
-                            </li>
-                            <li role="presentation">
-                                <a role="menuitem" tabindex="-1" th:href="@{/logout/}">退出</a>
-                            </li>
-
+                            <li><a th:href="@{/msg/list}">私信</a></li>
+                            <li><a th:href="@{/logout/}">退出</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -144,21 +135,20 @@
     </div>
 
 
-    <div th:each="vo : ${vos}">
+    <div th:each="feed : ${feeds}">
         <div class="row">
             <div class="col-md-1 col-md-offset-2">
-                <a th:href="@{'/user/'+${vo.get('user').id}}">
-                    <img th:src="${vo.get('user').headUrl}" height = "100%" width="100%"/>
-                </a>
+                <img th:src="${feed.get('userHead')}" height = "100%" width = "100%"/>
             </div>
-            <div class="col-md-9">
-                <!--<a th:href="@{/question(qid=${vo.get('question').id})}"><p th:text="${vo.get('question').title}"></p></a> -->
-                <a th:href="@{'/question/'+${vo.get('question').id}}"><p th:text="${vo.get('question').title}"></p></a>
-                <p th:utext="${vo.get('user').name}"></p>
-                <p th:utext="${#dates.format(vo.get('question').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></p>
-                <p th:utext="${vo.get('question').content}"></p>
-                <span th:utext="${vo.get('followCount')}"></span>条关注
-                <span th:utext="${vo.get('question').commentCount}"></span>条评论
+            <div class="col-md-9" th:if="${feed.type == 5}">
+                <span th:text="${feed.get('userName')}"></span>关注了该问题,
+                <span th:text="${#dates.format(feed.createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></span>
+                <p th:text="${feed.get('questionTitle')}"></p>
+            </div>
+            <div class="col-md-9" th:if="${feed.type == 2}">
+                <span th:text="${feed.get('userName')}"></span>评论了该问题,
+                <span th:text="${#dates.format(feed.createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></span>
+                <p th:text="${feed.get('questionTitle')}"></p>
             </div>
         </div>
         <div class="row">
@@ -168,9 +158,5 @@
 
 </div>
 
-
-
 </body>
-<!--<body style="background-image:url(http://pic4.nipic.com/20090821/2267807_180803075_2.jpg);">-->
-<!--</body>-->
 </html>
