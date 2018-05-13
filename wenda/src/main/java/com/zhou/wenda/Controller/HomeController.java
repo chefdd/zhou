@@ -43,6 +43,8 @@ public class HomeController {
     @RequestMapping(value = {"/", "/index"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String index(Model model) {
         model.addAttribute("vos", getQuestions(0, 0, 100));
+        //修改为随机产生的100个问题展示
+
         return "index";
     }
 

@@ -5,6 +5,7 @@ import com.zhou.wenda.Dao.LoginTicketDao;
 import com.zhou.wenda.Dao.UserDao;
 import com.zhou.wenda.domain.User;
 import com.zhou.wenda.utils.WendaUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-
+@Slf4j
 @Service
 public class UserService {
 
@@ -121,5 +122,37 @@ public class UserService {
         return userDao.findByName(username);
     }
 
+
+
+    /**
+     * 更新用户的密码
+     * @param userId
+     * @param pastPwd
+     * @param nowPwd
+     * @return信息只是用户是否更改成功
+     */
+    public Map<String, String> updatepwd(int userId, String pastPwd, String nowPwd) {
+        User user = userDao.findById(userId);
+        Map<String, String> map = new HashMap<>();
+
+
+        String password = WendaUtil.MD5(pastPwd + user.getSalt());
+        if (user.getPassword().equals(password)) {
+            //update password
+            user.setPassword(WendaUtil.MD5(nowPwd + user.getSalt()));
+            boolean flag = userDao.updatePassword(user);
+            if (!flag) {
+                map.put("msg", "更新密码的时候出错");
+                return map;
+            }
+
+        } else{
+            map.put("msg", "原密码不对，");
+            return map;
+
+        }
+        log.info("更新密码成功");
+        return map;
+    }
 
 }

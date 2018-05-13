@@ -76,10 +76,12 @@ public class MessageController {
     public String messageList(Model model) {
         try {
             if (hostHolder.getUser() == null) {
+                log.info("用户未登陆");
                 return "/reglogin";
             } else{
                 int userId = hostHolder.getUser().getId();
                 List<Message> conversationsList = messageService.getConversationList(userId);
+                log.info("查询出来的msg :{}", conversationsList);
                 List<ViewObject> conversations = new ArrayList<>();
 
                 for (Message message : conversationsList) {

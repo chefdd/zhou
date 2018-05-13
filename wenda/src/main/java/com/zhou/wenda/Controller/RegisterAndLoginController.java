@@ -24,6 +24,9 @@ public class RegisterAndLoginController {
     private UserService userService;
 
 
+    @Resource
+    private HostHolder hostHolder;
+
     /**
      * 登录注册页面
      * @param model
@@ -128,9 +131,40 @@ public class RegisterAndLoginController {
         }
     }
 
+    /**
+     * 用户退出网站
+     * @param ticket
+     * @return
+     */
     @RequestMapping(value = {"/logout"}, method = {RequestMethod.GET})
     public String logout(@CookieValue("ticket") String ticket) {
         userService.logout(ticket);
+        return "redirect:/";
+    }
+
+    /**
+     * 用户修改密码
+     * @param model
+     * @param next
+     * @return
+     */
+    @RequestMapping(value = "/changepwd/", method = RequestMethod.GET)
+    public String changePwd(Model model,
+                            @RequestParam(value = "next", required = false) String next){
+        model.addAttribute("next", next);
+        return "changepwd";
+    }
+
+
+    @RequestMapping(value = "/pwd/", method = {RequestMethod.POST,RequestMethod.GET})
+    public String changePwd(Model model,
+                            @RequestParam(value = "password") String password,
+                            @RequestParam(value = "usernamepwd") String usernamepwd){
+        System.out.println(password);
+        System.out.println(usernamepwd);
+
+        userService.updatepwd(hostHolder.getUser().getId(), usernamepwd, password);
+
         return "redirect:/";
     }
 }

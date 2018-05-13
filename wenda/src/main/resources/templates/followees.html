@@ -64,7 +64,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span th:utext="${user.name}"></span>
-                            <img th:src="${user.headUrl}"/>
+                            <img th:src="${user.headUrl}" height="50" width="50" class="img-circle"/>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -151,7 +151,7 @@
     <div th:each="followee : ${followees}">
         <div class="row">
             <div class="col-md-1 col-md-offset-2">
-                <img th:src="${followee.get('user').headUrl}"/>
+                <img th:src="${followee.get('user').headUrl}" height = "100%" width="100%"/>
             </div>
             <div class="col-md-9">
                 <p th:text="${followee.get('user').name}"></p>

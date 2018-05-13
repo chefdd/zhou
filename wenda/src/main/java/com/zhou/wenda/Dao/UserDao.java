@@ -29,6 +29,11 @@ public interface UserDao {
     @Update("update user set name = #{name} where id = #{id}")
     boolean updateName(User user);
 
+    /**
+     * 更改用户的密码
+     * @param user
+     * @return
+     */
     @Update("update user set password = #{password} where id = #{id}")
     boolean updatePassword(User user);
 

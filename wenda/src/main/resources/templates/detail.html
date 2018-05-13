@@ -25,7 +25,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <!--搜索框-->
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search" method = "post" th:action="@{/search}">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="搜索你感兴趣的内容"/>
                     </div>
@@ -59,7 +59,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span th:utext="${user.name}"></span>
-                            <img th:src="${user.headUrl}" height="50" width="50"/>
+                            <img th:src="${user.headUrl}" height="50" width="50" class="img-circle"/>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
