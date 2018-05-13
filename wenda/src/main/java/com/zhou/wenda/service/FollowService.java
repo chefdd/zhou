@@ -29,8 +29,8 @@ public class FollowService {
      * @return
      */
     public boolean follow(int entityIdA, int entityIdB, int entityType) {
-        String followerKey = RedisKey.getFollowerKey(entityType, entityIdB);
-        String followeeKey = RedisKey.getFolloweeKey(entityIdA, entityType);
+        String followerKey = RedisKey.getFollowerKey(entityType, entityIdB);//fans
+        String followeeKey = RedisKey.getFolloweeKey(entityIdA, entityType);//关注列表
 
         Date date = new Date();
         Jedis jedis = redJedis.getJedis();

@@ -59,31 +59,6 @@ public class FeedController {
         return "feeds";
     }
 
-    /**
-     * 采用推的模式：从redis中获取新鲜事的id，然后去数据库中查
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = {"/pushfeeds"})
-    private String getPushFeeds(Model model){
 
-        int localUserId = hostHolder.getUser() == null ? 0:hostHolder.getUser().getId();
-
-        List<String> feedIds = jedisAdapter.lrange(RedisKey.getTimelineKey(localUserId), 0, 10);
-        log.info("新鲜事id:{}", feedIds);
-        List<Feed> feeds = new ArrayList<>();
-
-        for (String feedId : feedIds){
-            Feed feed = feedService.getFeedById(Integer.parseInt(feedId));
-            if (feed == null){
-                continue;
-            }
-            feeds.add(feed);
-        }
-        log.info("新鲜事大小:{}", feeds.size());
-
-        model.addAttribute("feeds", feeds);
-        return "feeds";
-    }
 }
 
