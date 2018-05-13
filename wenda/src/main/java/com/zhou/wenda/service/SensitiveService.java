@@ -113,7 +113,7 @@ public class SensitiveService implements InitializingBean {
     }
 
     /**
-     * 非法字符判断：不是东亚文字，也不是英文单词
+     * 非法字符判断：不是东亚文字，也不是英文单词 such as ☺
      * @return
      */
     private boolean isSymbol(char c){
