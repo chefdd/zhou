@@ -138,6 +138,7 @@ public class UserService {
 
         String password = WendaUtil.MD5(pastPwd + user.getSalt());
         if (user.getPassword().equals(password)) {
+            log.info("原密码输入没错，开始更新密码");
             //update password
             user.setPassword(WendaUtil.MD5(nowPwd + user.getSalt()));
             boolean flag = userDao.updatePassword(user);
@@ -147,7 +148,8 @@ public class UserService {
             }
 
         } else{
-            map.put("msg", "原密码不对，");
+            log.info("原密码不对，请重新输入");
+            map.put("msg", "原密码不对，请重新输入");
             return map;
 
         }

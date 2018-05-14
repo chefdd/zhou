@@ -163,7 +163,11 @@ public class RegisterAndLoginController {
         System.out.println(password);
         System.out.println(usernamepwd);
 
-        userService.updatepwd(hostHolder.getUser().getId(), usernamepwd, password);
+        Map<String, String> map = userService.updatepwd(hostHolder.getUser().getId(), usernamepwd, password);
+        if (map.containsKey("msg")) {
+            model.addAttribute("msg", map.get("msg"));
+            return "changepwd";
+        }
 
         return "redirect:/";
     }
