@@ -3,12 +3,14 @@ package com.zhou.wenda.service;
 
 import com.zhou.wenda.Dao.LoginTicketDao;
 import com.zhou.wenda.domain.LoginTicket;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class TicketService {
 
@@ -26,7 +28,10 @@ public class TicketService {
         loginTicket.setUserId(userId);
         loginTicket.setTicket(UUID.randomUUID().toString().replace("-", ""));
         Date date = new Date();
-        date.setTime(date.getTime() + 3600 * 24 * 10);//有效期十天
+        log.info("现在的时间:{}", date);
+
+        date.setTime(date.getTime() + 1000 * 30 * 60);//有效期30分钟 毫秒
+        log.info("设置的时间为expired:{}", date);
         loginTicket.setExpired(date);
         loginTicket.setStatus(0);
         loginTicketDao.insertTicker(loginTicket);

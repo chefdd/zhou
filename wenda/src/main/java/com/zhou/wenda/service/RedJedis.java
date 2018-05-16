@@ -18,7 +18,10 @@ public class RedJedis implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        pool = new JedisPool("redis://localhost:6379/5");
+        //test
+//        pool = new JedisPool("redis://localhost:6379/5");
+        //in fact
+        pool = new JedisPool("redis://localhost:6379/2");
     }
 
     public long sadd(String key, String value) {

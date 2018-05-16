@@ -79,6 +79,11 @@ public class HomeController {
         List<ViewObject> vos = new ArrayList<>();
         for (Question question : questionList) {
             ViewObject vo = new ViewObject();
+            if (question.getContent().contains("src=\"http")) {
+                String content = question.getContent().replaceAll("src=\"http", " class=\"img-responsive center-block\" src=\"http");
+                question.setContent(content);
+
+            }
             vo.set("question", question);
             vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, question.getId()));
             vo.set("user", userService.getUserById(question.getUserId()));

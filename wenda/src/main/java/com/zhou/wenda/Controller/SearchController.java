@@ -55,6 +55,11 @@ public class SearchController {
                 Question q = questionService.selectById(question.getId());
                 ViewObject vo = new ViewObject();
                 if (question.getContent() != null) {
+                    if (question.getContent().contains("src=\"http")) {
+                        String content = question.getContent().replaceAll("src=\"http", " class=\"img-responsive center-block\" src=\"http");
+                        question.setContent(content);
+
+                    }
                     q.setContent(question.getContent());
                     log.info("搜索问题内筒为：{}", question.getContent());
                 }
@@ -68,6 +73,7 @@ public class SearchController {
                 vo.set("user", userService.getUserById(q.getUserId()));
                 vos.add(vo);
             }
+            log.info("vos:{}, keyword:{}", vos, keyword);
             model.addAttribute("vos", vos);
             model.addAttribute("keyword", keyword);
 
