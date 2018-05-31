@@ -29,6 +29,9 @@ public class MessageService {
 
     }
 
+    public int getConversationIdCount(String conversationId) {
+        return messageDao.getConversationIdCount(conversationId);
+    }
 
     public List<Message> getConversationList(int userId) {
         return messageDao.getConversationList(userId);

@@ -45,10 +45,10 @@
                 </ul>
 
                 <!--按钮-->
-                <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myMessage">
+                <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#myMessage">
                     发私信
                 </button>
-                <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">
+                <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#myModal">
                     提问
                 </button>
 
@@ -150,7 +150,7 @@
             <div class="col-md-2">
                 <p th:utext="${#dates.format(conversation.get('message').createdDate, 'yyyy年MM月dd日 hh:mm:ss')}"></p>
                 <a th:href="@{/msg/detail(conversationId=${conversation.get('message').conversationId})}">
-                    共有<span th:utext="${conversation.get('message').id}"></span>条会话
+                    共有<span th:utext="${conversation.get('count')}"></span>条会话
                 </a>
             </div>
         </div>

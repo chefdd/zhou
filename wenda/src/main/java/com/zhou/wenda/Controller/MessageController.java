@@ -89,6 +89,7 @@ public class MessageController {
                     vo.set("message", message);
                     int targetId = (message.getFromId() == userId ? message.getToId():message.getFromId());
                     vo.set("user", userService.getUserById(targetId));
+                    vo.set("count", messageService.getConversationIdCount(message.getConversationId()));
                     conversations.add(vo);
                 }
 
