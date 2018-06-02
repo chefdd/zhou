@@ -30,6 +30,7 @@ public class FollowHandler implements EventHandler {
     @Override
     public void doHandle(EventModel eventModel) {
         Message message = new Message();
+        //系统账号
         message.setFromId(WendaUtil.SYSTEM_USERID);
 
         message.setToId(eventModel.getEntityOwnerId());

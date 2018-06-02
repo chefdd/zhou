@@ -79,6 +79,7 @@ public class HomeController {
         List<ViewObject> vos = new ArrayList<>();
         for (Question question : questionList) {
             ViewObject vo = new ViewObject();
+            //对图片进行大小处理
             if (question.getContent().contains("src=\"http")) {
                 String content = question.getContent().replaceAll("src=\"http", " class=\"img-responsive center-block\" src=\"http");
                 question.setContent(content);
